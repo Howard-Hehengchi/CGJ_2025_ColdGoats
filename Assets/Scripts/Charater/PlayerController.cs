@@ -33,6 +33,10 @@ public class PlayerController : MonoBehaviour
                 Shoot();
             }
         }
+        else
+        {
+            shootTimer = shootInterval;
+        }
     }
 
     private void Shoot()
