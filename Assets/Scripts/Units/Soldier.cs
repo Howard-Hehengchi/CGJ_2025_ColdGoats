@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Soldier : UnitBehavior
+public class Soldier : AttackUnitBehavior
 {
     [SerializeField] float moveSpeed = 3f;
 

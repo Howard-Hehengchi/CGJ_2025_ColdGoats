@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ExplosiveRock : UnitBehavior
+public class ExplosiveRock : AttackUnitBehavior
 {
     [SerializeField] float acceleration = 5f;
     [SerializeField] int damage = 5;

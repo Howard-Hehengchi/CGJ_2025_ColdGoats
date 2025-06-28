@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0009dfc87906160458d56051189a3d73, type: 3}
+  m_Name: TileDataList
+  m_EditorClassIdentifier: 
+  tileDataList:
+  - tileBase: {fileID: 11400000, guid: 521e2474f17ded44ab0de8dcbab82e12, type: 2}
+    tileType: 0
+    tilePrefab: {fileID: 0}
+    cardBackTile: {fileID: 11400000, guid: 521e2474f17ded44ab0de8dcbab82e12, type: 2}
+    hitCount: 0
+  - tileBase: {fileID: 11400000, guid: 81745377b5bad534e851ab3578250fd3, type: 2}
+    tileType: 1
+    tilePrefab: {fileID: 1434867987985393860, guid: 30db5f85ae89ddb46aae6d77e8c2ba77, type: 3}
+    cardBackTile: {fileID: 11400000, guid: 4247913f02c595e48b18dd16fae9098b, type: 2}
+    hitCount: 5
+  - tileBase: {fileID: 11400000, guid: 9aab12eda0c07af42ab0ea428e8f77f5, type: 2}
+    tileType: 1
+    tilePrefab: {fileID: 0}
+    cardBackTile: {fileID: 11400000, guid: 4247913f02c595e48b18dd16fae9098b, type: 2}
+    hitCount: 5
+  - tileBase: {fileID: 11400000, guid: 20c55fbce8b2644479cac4300f73d3e6, type: 2}
+    tileType: 1
+    tilePrefab: {fileID: 0}
+    cardBackTile: {fileID: 11400000, guid: 4247913f02c595e48b18dd16fae9098b, type: 2}
+    hitCount: 5
+  - tileBase: {fileID: 11400000, guid: 10c86ea6e81a67b42a4aae47c39b18cc, type: 2}
+    tileType: 2
+    tilePrefab: {fileID: 7924594728166603281, guid: c4f5c69a413d6b249b4d4a674022d84d, type: 3}
+    cardBackTile: {fileID: 11400000, guid: e24e17e1cb01b0649873f5fa167b6f6d, type: 2}
+    hitCount: 10
+  - tileBase: {fileID: 11400000, guid: 59ab0a4523918114798947a1d9952146, type: 2}
+    tileType: 2
+    tilePrefab: {fileID: 0}
+    cardBackTile: {fileID: 11400000, guid: e24e17e1cb01b0649873f5fa167b6f6d, type: 2}
+    hitCount: 10
+  - tileBase: {fileID: 11400000, guid: 31c7cd97c8d387149a80ecae4dcfeae8, type: 2}
+    tileType: 3
+    tilePrefab: {fileID: 9124325592047234739, guid: 2bac270aa87db0e4a8abcc262e27ff41, type: 3}
+    cardBackTile: {fileID: 11400000, guid: 3abdc0c5aaddcca40b4c805dd9e3463a, type: 2}
+    hitCount: 0
+  - tileBase: {fileID: 11400000, guid: 51ff23a54f1b0ef4e9b8360c7b322105, type: 2}
+    tileType: 3
+    tilePrefab: {fileID: 0}
+    cardBackTile: {fileID: 11400000, guid: 3abdc0c5aaddcca40b4c805dd9e3463a, type: 2}
+    hitCount: 0

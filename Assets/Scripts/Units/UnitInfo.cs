@@ -5,6 +5,16 @@ using UnityEngine;
 public class UnitInfo : MonoBehaviour
 {
     [SerializeField, Min(1)] int maxHealth = 10;
+    private int Health { get => health;
+        set
+        {
+            health = Mathf.Clamp(value, 0, maxHealth);
+            if(healthbarComponent != null)
+            {
+                healthbarComponent.SetValue((float)health / maxHealth);
+            }
+        }
+    }
     private int health = 0;
 
     [SerializeField, Min(1)] int maxPotentialHealth = 10;
@@ -13,9 +23,10 @@ public class UnitInfo : MonoBehaviour
     public bool IsDead => health <= 0;
 
     [SerializeField] CardFlip cardComponent;
+    [SerializeField] Healthbar healthbarComponent;
     private void Start()
     {
-        health = maxHealth;
+        Health = maxHealth;
         potentalHealth = maxPotentialHealth;
     }
 
@@ -26,14 +37,14 @@ public class UnitInfo : MonoBehaviour
             potentalHealth -= amount;
             if(potentalHealth <= 0)
             {
-                health = maxHealth;
+                Health = maxHealth;
                 cardComponent.DoFlip();
             }
         }
         else
         {
-            health -= amount;
-            if (health <= 0)
+            Health -= amount;
+            if (Health <= 0)
             {
                 potentalHealth = maxPotentialHealth;
                 cardComponent.DoFlip();

@@ -5,14 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour, IHitable
 {
-    [SerializeField] List<TileBase> tileBaseList = new List<TileBase>();
-    [SerializeField] List<TileType> tileTypeList = new List<TileType>();
-    [SerializeField] List<UnitInfo> tilePrefabList = new List<UnitInfo>();
+    [SerializeField] TileDataList tileData;
 
-    private Dictionary<TileBase, TileType> tileTypeMap = new Dictionary<TileBase, TileType>();
-    private Dictionary<TileBase, UnitInfo> tilePrefabMap = new Dictionary<TileBase, UnitInfo>();
-
-    private Dictionary<Vector3Int, int> healthMap = new Dictionary<Vector3Int, int>();
+    private Dictionary<TileBase, TileBaseData> tileDataMap = new Dictionary<TileBase, TileBaseData>();
+    private Dictionary<Vector3Int, int> cellHitCountMap = new Dictionary<Vector3Int, int>();
+    private Dictionary<Vector3Int, UnitInfo> cellPrefabMap = new Dictionary<Vector3Int, UnitInfo>();
 
     [SerializeField] Transform testPrefab;
 
@@ -20,11 +17,7 @@ public class TilemapManager : MonoBehaviour, IHitable
 
     private void Start()
     {
-        for(int i = 0; i < tileBaseList.Count; i++)
-        {
-            tileTypeMap.Add(tileBaseList[i], tileTypeList[i]);
-            tilePrefabMap.Add(tileBaseList[i], tilePrefabList[i]);
-        }
+        tileDataMap = tileData.GetTileDataMap();
 
         tilemap = GetComponent<Tilemap>();
 
@@ -33,25 +26,27 @@ public class TilemapManager : MonoBehaviour, IHitable
         foreach (var cellPos in bounds.allPositionsWithin)
         {
             TileBase currentTile = tilemap.GetTile(cellPos);
-            if(currentTile != null)
+            if (currentTile == null) continue;
+
+            TileBaseData currentTileData = tileDataMap[currentTile];
+
+            tilemap.SetTile(cellPos, currentTileData.cardBackTile);
+
+            switch (currentTileData.tileType)
             {
-                switch (tileTypeMap[currentTile])
-                {
-                    case TileType.Environment:
-                        healthMap[cellPos] = 5;
-                        break;
-                    case TileType.Block:
-                        healthMap[cellPos] = 10;
-                        break;
-                    case TileType.Enemy:
-                        InstantiateTile(cellPos, tilePrefabMap[currentTile]);
-                        break;
-                    case TileType.Null:
-                        // Do nothing for null tiles
-                        break;
-                    default:
-                        break;
-                }
+                case TileType.Environment:
+                case TileType.Block:
+                    cellHitCountMap[cellPos] = currentTileData.hitCount;
+                    cellPrefabMap[cellPos] = currentTileData.tilePrefab;
+                    break;
+                case TileType.Enemy:
+                    InstantiateTile(cellPos, currentTileData.tilePrefab);
+                    break;
+                case TileType.Null:
+                    // Do nothing for null tiles
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -73,18 +68,33 @@ public class TilemapManager : MonoBehaviour, IHitable
     public void OnHit(Vector2 position, int hitAmount = 1)
     {
         Vector3Int cellPos = tilemap.WorldToCell(position);
-        if (healthMap.ContainsKey(cellPos))
+        if (cellHitCountMap.ContainsKey(cellPos))
         {
-            healthMap[cellPos] -= hitAmount;
-            if (healthMap[cellPos] <= 0)
+            cellHitCountMap[cellPos] -= hitAmount;
+            if (cellHitCountMap[cellPos] <= 0)
             {
-                TileBase tile = tilemap.GetTile(cellPos);
-                if (tile != null)
-                {
-                    healthMap.Remove(cellPos);
-                    InstantiateTile(cellPos, tilePrefabMap[tile]);
-                }
+                cellHitCountMap.Remove(cellPos);
+                InstantiateTile(cellPos, cellPrefabMap[cellPos]);
             }
+        }
+    }
+
+    [System.Serializable]
+    public struct TileBaseData
+    {
+        public TileBase tileBase;
+        public TileType tileType;
+        public UnitInfo tilePrefab;
+        public TileBase cardBackTile;
+        public int hitCount;
+
+        public TileBaseData(TileBase tileBase, TileType tileType, UnitInfo tilePrefab, TileBase cardBackTile, int hitCount)
+        {
+            this.tileBase = tileBase;
+            this.tileType = tileType;
+            this.tilePrefab = tilePrefab;
+            this.cardBackTile = cardBackTile;
+            this.hitCount = hitCount;
         }
     }
 

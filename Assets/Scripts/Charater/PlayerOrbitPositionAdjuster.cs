@@ -7,6 +7,7 @@ public class PlayerOrbitPositionAdjuster : MonoBehaviour
     private float constantDst = 0f;
 
     [SerializeField] bool needRotation = true;
+    [SerializeField] float constantDepthOffset = 0f;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class PlayerOrbitPositionAdjuster : MonoBehaviour
     {
         Vector2 mouseOffset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.parent.position;
         Vector2 targetPos = mouseOffset.normalized * constantDst;
-        transform.localPosition = targetPos;
+        transform.localPosition = new Vector3(targetPos.x, targetPos.y, constantDepthOffset);
 
         if (needRotation)
         {

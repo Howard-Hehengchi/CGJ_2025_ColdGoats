@@ -31,45 +31,8 @@ public abstract class UnitBehavior : MonoBehaviour
         if (Info.IsDead) return;
     }
 
-    protected virtual void FindNearestEnemy()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectRadius);
-
-        Transform targetEnemy = null;
-        if (colliders.Length > 0)
-        {
-            float minDst = float.MaxValue;
-            foreach (var collider in colliders)
-            {
-                //if (!CheckUnblocked(collider.transform)) continue;
-                if (!collider.TryGetComponent(out Enemy enemy) || enemy.info.IsDead)
-                {
-                    continue; // Skip dead enemies
-                }
-
-                float dst = Vector2.Distance(collider.transform.position, transform.position);
-                if (dst < minDst)
-                {
-                    minDst = dst;
-                    targetEnemy = collider.transform;
-                }
-            }
-        }
-
-        targetTF = targetEnemy;
-    }
-
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (Info.IsDead) return;
-
-        if (collision.transform.TryGetComponent(out Enemy enemy) && !enemy.info.IsDead)
-        {
-            DoDamage(enemy);
-
-            Destroy(gameObject);
-        }
     }
-
-    protected abstract void DoDamage(Enemy enemy);
 }
