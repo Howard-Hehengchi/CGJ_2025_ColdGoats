@@ -14,6 +14,7 @@ public class MeleeEnemy : Enemy
     {
         base.FixedUpdate();
 
+        if (!canMove) return;
         if (Info.IsDead) return;
 
         Vector2 playerPos = playerTF.position;

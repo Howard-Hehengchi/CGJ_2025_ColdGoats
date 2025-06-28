@@ -4,11 +4,13 @@ using UnityEngine;
 
 public abstract class AttackUnitBehavior : UnitBehavior
 {
+    protected Enemy targetEnemy;
+
     protected virtual void FindNearestEnemy()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectRadius);
 
-        Transform targetEnemy = null;
+        Enemy chosenEnemy = null;
         if (colliders.Length > 0)
         {
             float minDst = float.MaxValue;
@@ -24,12 +26,13 @@ public abstract class AttackUnitBehavior : UnitBehavior
                 if (dst < minDst)
                 {
                     minDst = dst;
-                    targetEnemy = collider.transform;
+                    chosenEnemy = enemy;
                 }
             }
         }
 
-        targetTF = targetEnemy;
+        targetEnemy = chosenEnemy;
+        targetTF = chosenEnemy != null ? chosenEnemy.transform : null;
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)

@@ -12,7 +12,7 @@ public class ExplosiveRock : AttackUnitBehavior
     {
         base.FixedUpdate();
 
-        if(targetTF == null)
+        if(targetEnemy == null || targetEnemy.Info.IsDead)
         {
             FindNearestEnemy();
         }

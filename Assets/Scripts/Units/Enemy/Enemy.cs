@@ -73,8 +73,6 @@ public abstract class Enemy : MonoBehaviour, IHitable
         return true;
     }
 
-    
-
     public void OnHit(Vector2 position, int hitAmount = 1)
     {
         Info.Hurt(hitAmount);
