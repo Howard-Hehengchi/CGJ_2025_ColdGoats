@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance { get; private set; }
+
     private Rigidbody2D body2D;
 
     private Vector2 input;
@@ -13,6 +15,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float shootInterval = 0.5f;
     private float shootTimer = 0f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
