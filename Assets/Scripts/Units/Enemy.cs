@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHitable
 {
-    private int maxHealth = 25;
-    private int health = 5;
+    [HideInInspector]
+    public UnitInfo info;
 
-    private bool IsDead { get { return health <= 0; } }
     private bool canMove = true;
 
     [SerializeField] float targetDetectDst = 5f;
+    [SerializeField] LayerMask detectLayer;
     private Vector2 targetPoint;
 
     [SerializeField] float moveSpeed = 3f;
@@ -22,14 +22,11 @@ public class Enemy : MonoBehaviour, IHitable
     [SerializeField] float attackPrepTime = 0.5f;
     [SerializeField] float attackInterval = 1f;
 
-    [Header("视效表现")]
-    [SerializeField] CardFlip cardComponent;
-
     private void Start()
     {
+        info = GetComponent<UnitInfo>();
         body2D = GetComponent<Rigidbody2D>();
 
-        health = maxHealth;
         targetPoint = Vector2.positiveInfinity;
         targetUpdateTimer = targetUpdateInterval;
         canMove = true;
@@ -42,7 +39,7 @@ public class Enemy : MonoBehaviour, IHitable
 
     private void FixedUpdate()
     {
-        if (IsDead) return;
+        if (info.IsDead) return;
         if (!canMove) return;
 
         Vector2 playerPos = PlayerController.Instance.transform.position;
@@ -66,13 +63,13 @@ public class Enemy : MonoBehaviour, IHitable
         }
         else
         {
-            body2D.AddForce(targetOffset.normalized * moveSpeed * 10f);
+            body2D.AddForce(14f * moveSpeed * targetOffset.normalized);
         }
     }
 
     private bool ObservePlayer(Vector2 playerDir)
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, playerDir, targetDetectDst);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, playerDir, targetDetectDst, detectLayer);
         if (hit2D && !hit2D.transform.CompareTag("Player"))
         {
             return false;
@@ -86,25 +83,23 @@ public class Enemy : MonoBehaviour, IHitable
         canMove = false;
         yield return new WaitForSeconds(attackPrepTime);
 
+        if (info.IsDead) yield break; // 如果在攻击准备期间死亡，则不执行冲刺
+
         body2D.AddForce(direction * dashPower, ForceMode2D.Impulse);
         yield return new WaitForSeconds(attackInterval);
         canMove = true;
         targetUpdateTimer = targetUpdateInterval; // 攻击之后立即寻路
     }
 
-    public void OnHit(Vector2 direction)
+    public void OnHit(Vector2 position, int hitAmount = 1)
     {
-        if (IsDead) return;
-
-        health--;
-        if(health <= 0)
-        {
-            cardComponent.DoFlip(direction.x);
-        }
+        info.Hurt(hitAmount);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (info.IsDead) return;
+
         if (collision.collider.TryGetComponent(out PlayerInfo playerInfo))
         {
             playerInfo.OnHit();

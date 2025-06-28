@@ -6,8 +6,8 @@ public class Block : MonoBehaviour, IHitable
 {
     [SerializeField] CardFlip cardComponent;
 
-    public void OnHit(Vector2 direction)
+    public void OnHit(Vector2 position, int hitAmount = 1)
     {
-        cardComponent.DoFlip(direction.x);
+        cardComponent.DoFlip();
     }
 }

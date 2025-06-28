@@ -11,7 +11,13 @@ public class CardFlip : MonoBehaviour
         isUp = true;
     }
 
-    public void DoFlip(float horizontalDir)
+    public void ForceUp(bool _isUp)
+    {
+        isUp = _isUp;
+        transform.forward = isUp ? Vector3.forward : Vector3.back;
+    }
+
+    public void DoFlip()
     {
         isUp = !isUp;
     }

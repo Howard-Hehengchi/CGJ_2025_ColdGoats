@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHitable
 {
-    public void OnHit(Vector2 direction);
+    public void OnHit(Vector2 position, int hitAmount = 1);
 }
