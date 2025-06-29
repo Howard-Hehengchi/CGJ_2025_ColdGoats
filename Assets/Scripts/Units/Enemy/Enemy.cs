@@ -35,7 +35,7 @@ public abstract class Enemy : MonoBehaviour, IHitable
         body2D = GetComponent<Rigidbody2D>();
 
         playerTF = PlayerController.Instance.transform;
-        targetPoint = playerTF.position;
+        targetPoint = transform.position;
 
         //targetUpdateTimer = targetUpdateInterval;
         canMove = true;

@@ -4,10 +4,33 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    private int maxHealth = 30;
-    private int health = 30;
+    private int maxHealth = 25;
+    private int Health
+    {
+        get { return health; }
+        set
+        {
+            health = Mathf.Clamp(value, 0, maxHealth);
+
+            print(health);
+            if (health <= 0)
+            {
+                Debug.Log("Player Dead");
+            }
+
+            UpdateHealthbar(health / (float)maxHealth);
+        }
+    }
+    private int health = 25;
 
     [SerializeField] GameObject hitMask;
+
+    [SerializeField] SpriteRenderer gunForegroundSpRenderer;
+    private Vector2 defaultSize = new Vector2(2f, 2f);
+    private Vector2 defaultPos = new Vector2(0f, 0f);
+
+    private Vector2 lowSize = new Vector2(2f, 0.96f);
+    private Vector2 lowPos = new Vector2(0f, -0.52f);
 
     private void Start()
     {
@@ -15,12 +38,18 @@ public class PlayerInfo : MonoBehaviour
         invincibleTimer = invincibleTime;
     }
 
-    private float invincibleTime = 1f;
+    private float invincibleTime = 0.6f;
     private float invincibleTimer = 0f;
 
     private void Update()
     {
         invincibleTimer += Time.deltaTime;
+    }
+
+    private void UpdateHealthbar(float value)
+    {
+        gunForegroundSpRenderer.size = Vector2.Lerp(lowSize, defaultSize, value);
+        gunForegroundSpRenderer.transform.localPosition = Vector2.Lerp(lowPos, defaultPos, value);
     }
 
     public void OnHit(int amount = 1)
@@ -29,18 +58,18 @@ public class PlayerInfo : MonoBehaviour
         {
             if (invincibleTimer <= invincibleTime) return;
 
-            health -= amount;
+            Health -= amount;
 
             invincibleTimer = 0f;
             StartCoroutine(HitFlash());
-            if (health <= 0)
+            if (Health <= 0)
             {
                 Debug.Log("Player Dead");
             }
         }
         else
         {
-            health -= amount; // Negative amount heals the player
+            Health -= amount; // Negative amount heals the player
         }
     }
 

@@ -217,11 +217,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Info: {fileID: 0}
-  detectRadius: 15
+  detectRadius: 10
   detectLayer:
     serializedVersion: 2
     m_Bits: 127
-  damage: 3
+  damage: 5
   moveSpeed: 8
 --- !u!114 &9124325592047234739
 MonoBehaviour:

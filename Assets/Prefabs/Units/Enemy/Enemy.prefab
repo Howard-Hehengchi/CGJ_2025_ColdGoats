@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Info: {fileID: 0}
-  detectRadius: 7
+  detectRadius: 6
   detectLayer:
     serializedVersion: 2
     m_Bits: 127
