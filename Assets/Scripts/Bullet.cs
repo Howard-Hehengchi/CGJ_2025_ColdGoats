@@ -93,7 +93,10 @@ public class Bullet : MonoBehaviour
             hbUnit.OnHit(Vector2.zero); // 无意义传参
         }
 
-        Destroy(gameObject);
+        if(!go.TryGetComponent(out BrickWall _))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void SelfDestroy(Vector2 collidePoint, Vector2 velDir)

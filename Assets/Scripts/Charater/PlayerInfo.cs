@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    private int maxHealth = 25;
+    private int maxHealth = 30;
     private int Health
     {
         get { return health; }
@@ -12,10 +12,9 @@ public class PlayerInfo : MonoBehaviour
         {
             health = Mathf.Clamp(value, 0, maxHealth);
 
-            print(health);
             if (health <= 0)
             {
-                Debug.Log("Player Dead");
+                GameManager.Instance.PlayerDie();
             }
 
             UpdateHealthbar(health / (float)maxHealth);
@@ -52,19 +51,23 @@ public class PlayerInfo : MonoBehaviour
         gunForegroundSpRenderer.transform.localPosition = Vector2.Lerp(lowPos, defaultPos, value);
     }
 
-    public void OnHit(int amount = 1)
+    public void OnHit(int amount = 1, bool ignoreInvincible = false)
     {
         if(amount > 0)
         {
-            if (invincibleTimer <= invincibleTime) return;
+            if (!ignoreInvincible && invincibleTimer <= invincibleTime) return;
 
             Health -= amount;
 
             invincibleTimer = 0f;
-            StartCoroutine(HitFlash());
+            if(flashCoroutine != null)
+            {
+                StopCoroutine(flashCoroutine);
+            }
+            flashCoroutine = StartCoroutine(HitFlash());
             if (Health <= 0)
             {
-                Debug.Log("Player Dead");
+                GameManager.Instance.PlayerDie();
             }
         }
         else
@@ -73,6 +76,7 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
+    private Coroutine flashCoroutine = null;
     private IEnumerator HitFlash()
     {
         int flashCycles = 4;

@@ -12,16 +12,19 @@ public class Rat : Enemy
         if (Info.IsDead) return;
 
         Vector2 targetOffset = targetPoint - (Vector2)transform.position;
-        body2D.AddForce(14f * moveSpeed * targetOffset.normalized);
+        if(targetOffset.magnitude > 0.2f && targetOffset.magnitude < DetectRadius)
+        {
+            body2D.AddForce(14f * moveSpeed * targetOffset.normalized);
+        }
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         if (Info.IsDead) return;
-        base.OnCollisionEnter2D(collision);
-
-        if (collision.collider.TryGetComponent(out PlayerInfo _))
+        if (collision.collider.TryGetComponent(out PlayerInfo playerInfo))
         {
+            playerInfo.OnHit(damage, ignoreInvincible: true);
+
             Destroy(gameObject);
         }
     }

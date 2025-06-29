@@ -38,6 +38,7 @@ public class VFXManager : MonoBehaviour
 
     public void GenerateExplosionVFX(Vector2 position, float lifeTime)
     {
+        SFXManager.Instance.PlayExplosionSFX();
         float timeStamp = Time.time;
         Transform tf = Instantiate(explosionEffectPrefab, position, Quaternion.identity, transform);
         generatedEffects.Enqueue(new EffectInfo(tf, timeStamp + lifeTime));

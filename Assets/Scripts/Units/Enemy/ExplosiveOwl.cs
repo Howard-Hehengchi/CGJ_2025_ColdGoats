@@ -26,7 +26,7 @@ public class ExplosiveOwl : Enemy
         {
             Explode();
         }
-        else
+        else if(targetOffset.magnitude < DetectRadius)
         {
             body2D.AddForce(14f * moveSpeed * targetOffset.normalized);
         }
@@ -71,6 +71,15 @@ public class ExplosiveOwl : Enemy
         {
             Explode();
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Info.IsDead) return;
+
+        if(collision.gameObject.TryGetComponent(out UnitBehavior _))
+        {
+            Explode();
+        }
     }
 }

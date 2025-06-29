@@ -22,7 +22,7 @@ public class MeleeEnemy : Enemy
         {
             StartCoroutine(Dash(targetOffset.normalized));
         }
-        else
+        else if(targetOffset.magnitude > 0.2f && targetOffset.magnitude < DetectRadius)
         {
             body2D.AddForce(14f * moveSpeed * targetOffset.normalized);
         }
@@ -35,6 +35,7 @@ public class MeleeEnemy : Enemy
 
         if (Info.IsDead) yield break; // 如果在攻击准备期间死亡，则不执行冲刺
 
+        SFXManager.Instance.PlayDashSFX(); // 播放冲刺音效
         body2D.AddForce(direction * dashPower, ForceMode2D.Impulse);
         yield return new WaitForSeconds(attackInterval);
         canMove = true;

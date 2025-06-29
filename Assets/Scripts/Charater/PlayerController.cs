@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
 
+    public BrickWall OnlyBrick = null;
+
     private Rigidbody2D body2D;
 
     private Vector2 input;
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
+        SFXManager.Instance.PlayGunFireSFX();
+
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePosition - (Vector2)transform.position).normalized;
         BulletManager.Instance.InstantiateBullet(bulletSpawnTF.position, direction);

@@ -19,6 +19,15 @@ public class Soldier : AttackUnitBehavior
             targetDir.Normalize();
             body2D.AddForce(5f * moveSpeed * targetDir);
         }
+        else
+        {
+            Vector2 playerPos = PlayerController.Instance.transform.position;
+            Vector2 dir = (playerPos - (Vector2)transform.position).normalized;
+            Vector2 targetPoint = playerPos - dir * Random.Range(1.5f, 3.5f);
+            Vector2 targetDir = targetPoint - (Vector2)transform.position;
+            targetDir.Normalize();
+            body2D.AddForce(5f * moveSpeed * targetDir);
+        }
     }
 
     protected override void DoDamage(Enemy enemy)

@@ -12,6 +12,8 @@ public class TilemapManager : MonoBehaviour, IHitable
     private Dictionary<Vector3Int, UnitInfo> cellPrefabMap = new Dictionary<Vector3Int, UnitInfo>();
 
     [SerializeField] Transform testPrefab;
+    [SerializeField] TileBase gameEndTile;
+    [SerializeField] Transform gameEndTilePrefab;
 
     private Tilemap tilemap;
 
@@ -27,6 +29,13 @@ public class TilemapManager : MonoBehaviour, IHitable
         {
             TileBase currentTile = tilemap.GetTile(cellPos);
             if (currentTile == null) continue;
+
+            if(currentTile == gameEndTile)
+            {
+                Instantiate(gameEndTilePrefab, Cell2World(cellPos), Quaternion.identity);
+                tilemap.SetTile(cellPos, null);
+                continue;
+            }
 
             TileBaseData currentTileData = tileDataMap[currentTile];
 

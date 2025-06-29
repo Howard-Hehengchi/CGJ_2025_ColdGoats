@@ -9,11 +9,16 @@ public abstract class Enemy : MonoBehaviour, IHitable
 
     protected bool canMove = true;
 
+    protected float DetectRadius
+    {
+        get { return isAlerted ? 20f : detectRadius; }
+    }
     [SerializeField] protected float detectRadius = 7f;
     [SerializeField] protected LayerMask detectLayer;
 
     [SerializeField] protected int damage = 5;
 
+    protected bool isAlerted = false;
     protected Transform playerTF;
     protected Vector2 targetPoint;
 
@@ -67,8 +72,9 @@ public abstract class Enemy : MonoBehaviour, IHitable
         //    targetPoint = playerPos;
         //}
 
-        if(Vector2.Distance(playerPos, transform.position) < detectRadius)
+        if(Vector2.Distance(playerPos, transform.position) < DetectRadius)
         {
+            isAlerted = true;
             targetPoint = playerPos;
         }
     }
@@ -88,6 +94,8 @@ public abstract class Enemy : MonoBehaviour, IHitable
     public virtual void OnHit(Vector2 position, int hitAmount = 1)
     {
         Info.Hurt(hitAmount);
+
+        isAlerted = true;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
