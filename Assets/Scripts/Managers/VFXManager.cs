@@ -6,8 +6,9 @@ public class VFXManager : MonoBehaviour
 {
     public static VFXManager Instance { get; private set; }
 
+    [SerializeField] Transform explosionEffectPrefab;
     [SerializeField] Transform collideParticlesPrefab;
-    private Queue<ParticleInfo> particles = new Queue<ParticleInfo>();
+    private Queue<EffectInfo> generatedEffects = new Queue<EffectInfo>();
 
     private void Awake()
     {
@@ -16,13 +17,13 @@ public class VFXManager : MonoBehaviour
     
     private void Update()
     {
-        if(particles.Count > 0)
+        if(generatedEffects.Count > 0)
         {
-            ParticleInfo pInfo = particles.Peek();
+            EffectInfo pInfo = generatedEffects.Peek();
             if (Time.time >= pInfo.decayTime)
             {
                 Destroy(pInfo.tf.gameObject);
-                particles.Dequeue();
+                generatedEffects.Dequeue();
             }
         }
     }
@@ -32,18 +33,25 @@ public class VFXManager : MonoBehaviour
         float timeStamp = Time.time;
         float angle = Vector2.SignedAngle(Vector2.up, direction);
         Transform tf = Instantiate(collideParticlesPrefab, position, Quaternion.AngleAxis(angle, Vector3.forward), transform);
-        particles.Enqueue(new ParticleInfo(tf, timeStamp));
+        generatedEffects.Enqueue(new EffectInfo(tf, timeStamp + 2f));
     }
 
-    private struct ParticleInfo
+    public void GenerateExplosionVFX(Vector2 position, float lifeTime)
+    {
+        float timeStamp = Time.time;
+        Transform tf = Instantiate(explosionEffectPrefab, position, Quaternion.identity, transform);
+        generatedEffects.Enqueue(new EffectInfo(tf, timeStamp + lifeTime));
+    }
+
+    private struct EffectInfo
     {
         public Transform tf;
         public float decayTime;
 
-        public ParticleInfo(Transform _tf, float _generateTime)
+        public EffectInfo(Transform _tf, float _decayTime)
         {
             tf = _tf;
-            decayTime = _generateTime + 2f;
+            decayTime = _decayTime;
         }
     }
 }

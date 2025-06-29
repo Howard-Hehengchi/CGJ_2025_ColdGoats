@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    private int maxHealth = 5;
-    private int health = 5;
+    private int maxHealth = 30;
+    private int health = 30;
 
     [SerializeField] GameObject hitMask;
 
@@ -23,16 +23,24 @@ public class PlayerInfo : MonoBehaviour
         invincibleTimer += Time.deltaTime;
     }
 
-    public void OnHit()
+    public void OnHit(int amount = 1)
     {
-        if (invincibleTimer <= invincibleTime) return;
-
-        health -= 1;
-        invincibleTimer = 0f;
-        StartCoroutine(HitFlash());
-        if(health <= 0)
+        if(amount > 0)
         {
-            Debug.Log("Player Dead");
+            if (invincibleTimer <= invincibleTime) return;
+
+            health -= amount;
+
+            invincibleTimer = 0f;
+            StartCoroutine(HitFlash());
+            if (health <= 0)
+            {
+                Debug.Log("Player Dead");
+            }
+        }
+        else
+        {
+            health -= amount; // Negative amount heals the player
         }
     }
 

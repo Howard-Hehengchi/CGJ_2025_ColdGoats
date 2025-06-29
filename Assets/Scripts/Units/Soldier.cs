@@ -5,6 +5,7 @@ using UnityEngine;
 public class Soldier : AttackUnitBehavior
 {
     [SerializeField] float moveSpeed = 3f;
+    [SerializeField] int damage = 1;
 
     protected override void FixedUpdate()
     {
@@ -22,6 +23,7 @@ public class Soldier : AttackUnitBehavior
 
     protected override void DoDamage(Enemy enemy)
     {
-        enemy.OnHit(Vector2.zero); // 无意义传参
+        enemy.OnHit(Vector2.zero, damage); // 无意义传参
+        Destroy(gameObject);
     }
 }

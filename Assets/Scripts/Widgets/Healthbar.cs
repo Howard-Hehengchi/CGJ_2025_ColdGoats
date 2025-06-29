@@ -45,6 +45,11 @@ public class Healthbar : MonoBehaviour
 
     public void SetValue(float value)
     {
+        if(enabled == false)
+        {
+            return;
+        }
+
         if (value == 0f)
         {
             barSpRenderer.gameObject.SetActive(false);
@@ -63,13 +68,13 @@ public class Healthbar : MonoBehaviour
         barSpRenderer.transform.localPosition = new Vector3(Mathf.Lerp(posMinValue, posMaxValue, value), barSpRenderer.transform.localPosition.y, barSpRenderer.transform.localPosition.z);
     }
 
-    public void Show()
+    private void Show()
     {
         targetPosition = defaultPosition;
         targetScale = defaultScale;
     }
 
-    public void Hide()
+    private void Hide()
     {
         targetPosition = Vector2.zero;
         targetScale = Vector2.zero;

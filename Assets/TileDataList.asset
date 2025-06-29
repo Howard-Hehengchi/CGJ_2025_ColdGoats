@@ -25,22 +25,32 @@ MonoBehaviour:
     hitCount: 5
   - tileBase: {fileID: 11400000, guid: 9aab12eda0c07af42ab0ea428e8f77f5, type: 2}
     tileType: 1
-    tilePrefab: {fileID: 1434867987985393860, guid: 30db5f85ae89ddb46aae6d77e8c2ba77, type: 3}
+    tilePrefab: {fileID: 1434867987985393860, guid: e94ddcc78b85ac342a9b13256b058a4a, type: 3}
     cardBackTile: {fileID: 11400000, guid: 4247913f02c595e48b18dd16fae9098b, type: 2}
     hitCount: 5
-  - tileBase: {fileID: 11400000, guid: 20c55fbce8b2644479cac4300f73d3e6, type: 2}
+  - tileBase: {fileID: 11400000, guid: 622db0baba73db24c8fa1a62b5b8a5ca, type: 2}
     tileType: 1
-    tilePrefab: {fileID: 1434867987985393860, guid: 30db5f85ae89ddb46aae6d77e8c2ba77, type: 3}
+    tilePrefab: {fileID: 1434867987985393860, guid: e8f713a5a6e0f004bab73e648b2ef60c, type: 3}
     cardBackTile: {fileID: 11400000, guid: 4247913f02c595e48b18dd16fae9098b, type: 2}
-    hitCount: 5
+    hitCount: 3
   - tileBase: {fileID: 11400000, guid: 10c86ea6e81a67b42a4aae47c39b18cc, type: 2}
     tileType: 2
     tilePrefab: {fileID: 7924594728166603281, guid: c4f5c69a413d6b249b4d4a674022d84d, type: 3}
     cardBackTile: {fileID: 11400000, guid: e24e17e1cb01b0649873f5fa167b6f6d, type: 2}
     hitCount: 10
-  - tileBase: {fileID: 11400000, guid: 59ab0a4523918114798947a1d9952146, type: 2}
+  - tileBase: {fileID: 11400000, guid: 19ce828ec95b3cd4ea5bb48da9441097, type: 2}
     tileType: 2
-    tilePrefab: {fileID: 1434867987985393860, guid: 30db5f85ae89ddb46aae6d77e8c2ba77, type: 3}
+    tilePrefab: {fileID: 7924594728166603281, guid: ddfd514d2ec5f8e4c87538825229dddb, type: 3}
+    cardBackTile: {fileID: 11400000, guid: e24e17e1cb01b0649873f5fa167b6f6d, type: 2}
+    hitCount: 20
+  - tileBase: {fileID: 11400000, guid: 38f3df1173c98fe49b4a2a47ec7bde95, type: 2}
+    tileType: 2
+    tilePrefab: {fileID: 7924594728166603281, guid: b7effaf113b47694bab61c396efffcc7, type: 3}
+    cardBackTile: {fileID: 11400000, guid: e24e17e1cb01b0649873f5fa167b6f6d, type: 2}
+    hitCount: 10
+  - tileBase: {fileID: 11400000, guid: 235a3affabae3f944a127ee33daabfdb, type: 2}
+    tileType: 2
+    tilePrefab: {fileID: 7924594728166603281, guid: b740f4474aa17d348a12264e49decc9b, type: 3}
     cardBackTile: {fileID: 11400000, guid: e24e17e1cb01b0649873f5fa167b6f6d, type: 2}
     hitCount: 10
   - tileBase: {fileID: 11400000, guid: 31c7cd97c8d387149a80ecae4dcfeae8, type: 2}
@@ -50,6 +60,11 @@ MonoBehaviour:
     hitCount: 0
   - tileBase: {fileID: 11400000, guid: 51ff23a54f1b0ef4e9b8360c7b322105, type: 2}
     tileType: 3
-    tilePrefab: {fileID: 1434867987985393860, guid: 30db5f85ae89ddb46aae6d77e8c2ba77, type: 3}
+    tilePrefab: {fileID: 9124325592047234739, guid: 90517d1f89295a24087f99cbd8427dc6, type: 3}
+    cardBackTile: {fileID: 11400000, guid: 3abdc0c5aaddcca40b4c805dd9e3463a, type: 2}
+    hitCount: 0
+  - tileBase: {fileID: 11400000, guid: 873c6afeb90b88040b4f440f8cf864a1, type: 2}
+    tileType: 3
+    tilePrefab: {fileID: 9124325592047234739, guid: 06cb2ba0021b6844f92acc565e4e27f5, type: 3}
     cardBackTile: {fileID: 11400000, guid: 3abdc0c5aaddcca40b4c805dd9e3463a, type: 2}
     hitCount: 0

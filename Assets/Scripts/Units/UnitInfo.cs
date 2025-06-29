@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitInfo : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class UnitInfo : MonoBehaviour
         set
         {
             health = Mathf.Clamp(value, 0, maxHealth);
-            if(healthbarComponent != null)
+            CheckHealthbar();
+            if(NeedHealthbar && healthbarComponent != null)
             {
                 healthbarComponent.SetValue((float)health / maxHealth);
             }
@@ -22,12 +24,41 @@ public class UnitInfo : MonoBehaviour
 
     public bool IsDead => health <= 0;
 
-    [SerializeField] CardFlip cardComponent;
-    [SerializeField] Healthbar healthbarComponent;
-    private void Start()
+    private Action OnAlive;
+    public void AddOnAlive(Action _OnAlive)
     {
+        OnAlive -= _OnAlive;
+        OnAlive += _OnAlive;
+    }
+
+    [SerializeField] CardFlip cardComponent;
+
+    [SerializeField] Healthbar healthbarPrefab;
+    public bool NeedHealthbar = false;
+    private Healthbar healthbarComponent;
+
+    private void Awake()
+    {
+        AddOnAlive(CheckHealthbar);
+
+        healthbarComponent = GetComponentInChildren<Healthbar>();
+
         Health = maxHealth;
         potentalHealth = maxPotentialHealth;
+    }
+
+    private void CheckHealthbar()
+    {
+        if(NeedHealthbar && healthbarComponent == null)
+        {
+            healthbarComponent = Instantiate(healthbarPrefab, transform.position, Quaternion.identity, transform);
+            healthbarComponent.GetComponent<HealthbarUnit>().EntityInfo = this;
+        }
+    }
+
+    public void SetInitState(int _health)
+    {
+        health = _health;
     }
 
     public void Hurt(int amount = 1)
@@ -37,8 +68,13 @@ public class UnitInfo : MonoBehaviour
             potentalHealth -= amount;
             if(potentalHealth <= 0)
             {
+                OnAlive?.Invoke();
                 Health = maxHealth;
-                cardComponent.DoFlip();
+
+                if (NeedHealthbar)
+                {
+                    cardComponent.DoFlip();
+                }
             }
         }
         else
@@ -46,6 +82,12 @@ public class UnitInfo : MonoBehaviour
             Health -= amount;
             if (Health <= 0)
             {
+                if (!NeedHealthbar)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+
                 potentalHealth = maxPotentialHealth;
                 cardComponent.DoFlip();
             }

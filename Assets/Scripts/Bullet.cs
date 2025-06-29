@@ -60,9 +60,14 @@ public class Bullet : MonoBehaviour
             if (hit2D.transform.TryGetComponent(out IHitable hitable))
             {
                 //Vector2 direction = (hit2D.transform.position - transform.position).normalized;
+                //print("Ray hit " + hit2D.transform.name);
                 hitable.OnHit(hit2D.point);
             }
-            Destroy(gameObject);
+
+            if(!hit2D.transform.TryGetComponent(out UnitBehavior _))
+            {
+                SelfDestroy(hit2D.point, body2D.velocity.normalized);
+            }
         }
     }
 
@@ -75,6 +80,25 @@ public class Bullet : MonoBehaviour
             hitable.OnHit(collision.contacts[0].point);
         }
 
+        SelfDestroy(collision.contacts[0].point, body2D.velocity.normalized);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameObject go = collision.gameObject;
+        if (go.TryGetComponent(out HealthbarUnit hbUnit))
+        {
+            //Vector2 direction = (collision.transform.position - transform.position).normalized;
+            //print("Trigger enter");
+            hbUnit.OnHit(Vector2.zero); // 无意义传参
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void SelfDestroy(Vector2 collidePoint, Vector2 velDir)
+    {
+        VFXManager.Instance.GenerateCollideVFX(collidePoint, -velDir);
         Destroy(gameObject);
     }
 }

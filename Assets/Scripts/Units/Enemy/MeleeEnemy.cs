@@ -17,9 +17,8 @@ public class MeleeEnemy : Enemy
         if (!canMove) return;
         if (Info.IsDead) return;
 
-        Vector2 playerPos = playerTF.position;
         Vector2 targetOffset = targetPoint - (Vector2)transform.position;
-        if (targetPoint == playerPos && targetOffset.magnitude <= attackDst)
+        if (TargetIsPlayer && targetOffset.magnitude <= attackDst)
         {
             StartCoroutine(Dash(targetOffset.normalized));
         }
@@ -39,6 +38,6 @@ public class MeleeEnemy : Enemy
         body2D.AddForce(direction * dashPower, ForceMode2D.Impulse);
         yield return new WaitForSeconds(attackInterval);
         canMove = true;
-        targetUpdateTimer = targetUpdateInterval; // 攻击之后立即寻路
+        //targetUpdateTimer = targetUpdateInterval; // 攻击之后立即寻路
     }
 }

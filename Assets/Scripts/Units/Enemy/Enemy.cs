@@ -9,8 +9,10 @@ public abstract class Enemy : MonoBehaviour, IHitable
 
     protected bool canMove = true;
 
-    [SerializeField] protected float targetDetectDst = 5f;
+    [SerializeField] protected float detectRadius = 7f;
     [SerializeField] protected LayerMask detectLayer;
+
+    [SerializeField] protected int damage = 5;
 
     protected Transform playerTF;
     protected Vector2 targetPoint;
@@ -35,12 +37,12 @@ public abstract class Enemy : MonoBehaviour, IHitable
         playerTF = PlayerController.Instance.transform;
         targetPoint = playerTF.position;
 
-        targetUpdateTimer = targetUpdateInterval;
+        //targetUpdateTimer = targetUpdateInterval;
         canMove = true;
     }
 
-    protected float targetUpdateInterval = 0.5f;
-    protected float targetUpdateTimer = 0f;
+    //protected float targetUpdateInterval = 0.5f;
+    //protected float targetUpdateTimer = 0f;
 
     protected virtual void FixedUpdate()
     {
@@ -49,15 +51,25 @@ public abstract class Enemy : MonoBehaviour, IHitable
 
         Vector2 playerPos = playerTF.position;
 
-        targetUpdateTimer += Time.fixedDeltaTime;
-        if(targetUpdateTimer >= targetUpdateInterval)
-        {
-            targetUpdateTimer = 0f;
+        //targetUpdateTimer += Time.fixedDeltaTime;
+        //if(targetUpdateTimer >= targetUpdateInterval)
+        //{
+        //    targetUpdateTimer = 0f;
 
-            if (PlayerObservable(playerPos))
-            {
-                targetPoint = playerPos;
-            }
+        //    if (PlayerObservable(playerPos))
+        //    {
+        //        targetPoint = playerPos;
+        //    }
+        //}
+
+        //if (PlayerObservable(playerPos))
+        //{
+        //    targetPoint = playerPos;
+        //}
+
+        if(Vector2.Distance(playerPos, transform.position) < detectRadius)
+        {
+            targetPoint = playerPos;
         }
     }
 
@@ -73,18 +85,18 @@ public abstract class Enemy : MonoBehaviour, IHitable
         return true;
     }
 
-    public void OnHit(Vector2 position, int hitAmount = 1)
+    public virtual void OnHit(Vector2 position, int hitAmount = 1)
     {
         Info.Hurt(hitAmount);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (Info.IsDead) return;
 
         if (collision.collider.TryGetComponent(out PlayerInfo playerInfo))
         {
-            playerInfo.OnHit();
+            playerInfo.OnHit(damage);
         }
     }
 }

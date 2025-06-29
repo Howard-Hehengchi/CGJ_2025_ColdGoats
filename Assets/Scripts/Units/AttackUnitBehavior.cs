@@ -42,8 +42,6 @@ public abstract class AttackUnitBehavior : UnitBehavior
         if (collision.transform.TryGetComponent(out Enemy enemy) && !enemy.Info.IsDead)
         {
             DoDamage(enemy);
-
-            Destroy(gameObject);
         }
     }
 
