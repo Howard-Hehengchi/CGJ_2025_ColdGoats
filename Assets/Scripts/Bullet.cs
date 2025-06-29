@@ -79,7 +79,7 @@ public class Bullet : MonoBehaviour
             //Vector2 direction = (collision.transform.position - transform.position).normalized;
             hitable.OnHit(collision.contacts[0].point);
         }
-
+        
         SelfDestroy(collision.contacts[0].point, body2D.velocity.normalized);
     }
 

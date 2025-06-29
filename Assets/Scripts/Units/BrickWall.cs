@@ -49,7 +49,6 @@ public class BrickWall : DefendUnitBehavior
         boxCollider.isTrigger = true;
 
         transform.SetParent(playerTF);
-        PlayerController.Instance.OnlyBrick = this;
         orbitAdjuster = GetComponent<PlayerOrbitPositionAdjuster>();
         orbitAdjuster.constantDst = 1.5f;
     }
@@ -70,11 +69,14 @@ public class BrickWall : DefendUnitBehavior
             Info.Hurt(1);
             if (Info.IsDead)
             {
-                PlayerController.Instance.OnlyBrick = null;
-                currentCount--;
-                indexOccupiedArray[currentIndex] = false; // 释放当前索引位置
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        currentCount--;
+        indexOccupiedArray[currentIndex] = false; // 释放当前索引位置
     }
 }

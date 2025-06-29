@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
 
-    public BrickWall OnlyBrick = null;
-
     private Rigidbody2D body2D;
 
     private Vector2 input;
