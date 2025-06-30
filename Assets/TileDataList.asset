@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: TileDataList
   m_EditorClassIdentifier: 
   tileDataList:
-  - tileBase: {fileID: 11400000, guid: 521e2474f17ded44ab0de8dcbab82e12, type: 2}
-    tileType: 0
-    tilePrefab: {fileID: 1434867987985393860, guid: 30db5f85ae89ddb46aae6d77e8c2ba77, type: 3}
-    cardBackTile: {fileID: 11400000, guid: 521e2474f17ded44ab0de8dcbab82e12, type: 2}
+  - tileBase: {fileID: 11400000, guid: 28005461f37f0ac428bbf9c25ad8dea1, type: 2}
+    tileType: 1
+    tilePrefab: {fileID: 3792182021147182736, guid: 739b99e9e2ba16643b0e45016a79ec51, type: 3}
+    cardBackTile: {fileID: 11400000, guid: 28005461f37f0ac428bbf9c25ad8dea1, type: 2}
     hitCount: 0
   - tileBase: {fileID: 11400000, guid: 81745377b5bad534e851ab3578250fd3, type: 2}
     tileType: 1

@@ -92,8 +92,12 @@ public class Bullet : MonoBehaviour
             //print("Trigger enter");
             hbUnit.OnHit(Vector2.zero); // 无意义传参
         }
+        else if(go.TryGetComponent(out EscapeUnit escapeUnit))
+        {
+            escapeUnit.OnHit(Vector2.zero); // 无意义传参
+        }
 
-        if(!go.TryGetComponent(out BrickWall _))
+        if (!go.TryGetComponent(out BrickWall _))
         {
             Destroy(gameObject);
         }
